@@ -16,7 +16,7 @@ import analysis
 # ====================================================
 
 # What to analyze
-RUN_POPULATION_ANALYSIS = False   # Run population distribution analysis
+RUN_POPULATION_ANALYSIS = True   # Run population distribution analysis
 RUN_SPIN_ANALYSIS = False          # Run black hole spin correlation analysis
 
 # Statistical test method for population analysis
@@ -37,7 +37,7 @@ ANGLE_UNCERTAINTY_STEP = 5.0       # Step size for angle uncertainty
 
 # Distance uncertainty (as a fraction)
 DISTANCE_UNCERTAINTY_MIN = 0.0     # Minimum distance uncertainty to test
-DISTANCE_UNCERTAINTY_MAX = 0.5   # Maximum distance uncertainty to test
+DISTANCE_UNCERTAINTY_MAX = 0.3   # Maximum distance uncertainty to test
 DISTANCE_UNCERTAINTY_STEP = 0.05    # Step size for distance uncertainty
 
 # Simulation parameters
