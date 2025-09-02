@@ -162,8 +162,8 @@ def create_histogram(data, bins, color, title, xlabel, range_x, range_y, legend=
             linewidth=1.0
         )
     
-    ax.set_xlabel(xlabel)
-    ax.set_ylabel('Frequency')
+    ax.set_xlabel(xlabel, fontsize=21)
+    ax.set_ylabel('Frequency', fontsize=21)
     ax.set_title(title, pad=10)
     ax.set_xlim(range_x)
     ax.set_ylim(range_y)
@@ -181,7 +181,7 @@ def create_histogram(data, bins, color, title, xlabel, range_x, range_y, legend=
     
     return fig, ax
 
-def create_spin_plot(data_points, data_limits, x_label, y_label="βγ", y_max=None):
+def create_spin_plot(data_points, data_limits, x_label, y_label="βΓ", y_max=None):
     """Create a scatter plot with different markers for points and lower limits"""
     fig, ax = plt.subplots(figsize=(8, 6))
     
@@ -196,15 +196,15 @@ def create_spin_plot(data_points, data_limits, x_label, y_label="βγ", y_max=No
     ax.scatter(x_regular, y_regular, color='blue', s=100, marker='o', label='Measurements')
     
     # Plot lower limits with filled up-triangles
-    ax.scatter(x_limits, y_limits, color='blue', s=150, marker='^', label='βγ Lower Limits')
+    ax.scatter(x_limits, y_limits, color='blue', s=150, marker='^', label='βΓ Lower Limits')
     
     # Add arrows to indicate these are limits
-    for x, y in data_limits:
-        ax.annotate('', xy=(x, y+0.2), xytext=(x, y),
-                    arrowprops=dict(arrowstyle="->", color='blue', alpha=0.5))
+    #for x, y in data_limits:
+    #    ax.annotate('', xy=(x, y+0.2), xytext=(x, y),
+    #                arrowprops=dict(arrowstyle="->", color='blue', alpha=0.5))
     
-    ax.set_xlabel(x_label, fontsize=14)
-    ax.set_ylabel(y_label, fontsize=14)
+    ax.set_xlabel(x_label, fontsize=16)
+    ax.set_ylabel(y_label, fontsize=16)
     ax.set_xlim(0, 1)
     if y_max:
         ax.set_ylim(0, y_max)
@@ -519,8 +519,8 @@ def create_physics_plots(data, triangle_points, light_gray, gray, blue, green, r
     #     data['all_betagammas'], 
     #     betagamma_bins, 
     #     light_gray, 
-    #     "Measured βγ all sources", 
-    #     "βγ", 
+    #     "Measured βΓ all sources", 
+    #     "βΓ", 
     #     [0.0, 6.0], 
     #     [0, 8]
     # )
@@ -565,26 +565,26 @@ def create_physics_plots(data, triangle_points, light_gray, gray, blue, green, r
         [data['bh_betagammas'], data['ns_betagammas'], data['unknown_betagammas']], 
         betagamma_bins, 
         [gray, blue, green], 
-        "Measured βγ", 
-        "βγ", 
+        "", 
+        "βΓ", 
         [0.0, 6.0], 
-        [0, 6],
+        [0, 6.5],
         ["BH", "NS", "unknown CO"]
     )
     add_triangles(ax6, [triangle_points['t4_points'], triangle_points['t4a_points']])
     plt.tight_layout()
     plt.savefig('figures/physics3c.pdf')
     plt.savefig('figures/physics3c.png', dpi=300)
-    plt.savefig('figures/SCIENCEFIG1.pdf')
-    plt.savefig('figures/SCIENCEFIG1.png', dpi=300)
+    plt.savefig('figures/FIG3.pdf')
+    plt.savefig('figures/FIG3.png', dpi=300)
 
     # # Plot 7: Precession vs No Precession Beta*Gamma with triangles
     # fig7, ax7 = create_histogram(
     #     [data['prec_betagammas'], data['nonprec_betagammas']], 
     #     betagamma_bins, 
     #     ['#FFA07A', '#20B2AA'],  # Light salmon and light sea green
-    #     "βγ", 
-    #     "βγ", 
+    #     "βΓ", 
+    #     "βΓ", 
     #     [0.0, 16.0], 
     #     [0, 6],
     #     ["precessing", "no precession"]
@@ -595,38 +595,30 @@ def create_physics_plots(data, triangle_points, light_gray, gray, blue, green, r
     # plt.savefig('physics4a.png', dpi=300)
 
     # Plot 8: Precession vs No Precession Beta*Gamma with triangles (no URF)
-    fig8, ax8 = create_histogram(
-        [data['prec_betagammas'], data['nonprec_betagammas']], 
-        betagamma_bins, 
-        ['#FFA07A', '#20B2AA'],  # Light salmon and light sea green
-        "Measured βγ", 
-        "βγ", 
-        [0.0, 6.0], 
-        [0, 6],
-        ["precessing", "fixed axis"]
-    )
-    add_triangles(ax8, [triangle_points['t4_points'], triangle_points['t4a_points']])
-    plt.tight_layout()
-    plt.savefig('physics4b.pdf')
-    plt.savefig('physics4b.png', dpi=300)
-
+    #fig8, ax8 = create_histogram(
+    #    [data['prec_betagammas'], data['nonprec_betagammas']], 
+    #    betagamma_bins, 
+    #    ['#FFA07A', '#20B2AA'],  # Light salmon and light sea green
+    #    "Measured βΓ", 
+    #
+    
     # Plot 9: Three-way classification with triangles - Science Figure 2
     fig9, ax9 = create_histogram(
         [data['prec_betagammas'], data['fixed_betagammas'], data['single_betagammas']], 
         betagamma_bins, 
         [red, blue, 'white'], 
-        "Measured βγ", 
-        "βγ", 
+        "", 
+        "βΓ", 
         [0.0, 6.0], 
-        [0, 6],
+        [0, 6.5],
         ["precessing", "fixed axis", "single"]
     )
     add_triangles(ax9, [triangle_points['t4_points'], triangle_points['t4a_points']])
     plt.tight_layout()
     plt.savefig('figures/prec3way.pdf')
     plt.savefig('figures/prec3way.png', dpi=300)
-    plt.savefig('figures/SCIENCEFIG2.pdf')
-    plt.savefig('figures/SCIENCEFIG2.png', dpi=300)
+    plt.savefig('figures/FIG1.pdf')
+    plt.savefig('figures/FIG1.png', dpi=300)
 
 
 def create_spin_speed_plots(rr, rrl, cc, ccl, qq, qql):
@@ -655,9 +647,9 @@ def create_spin_speed_plots(rr, rrl, cc, ccl, qq, qql):
     # Reflection plot - NO REGRESSION LINES
     ax1 = fig_combined.add_subplot(gs[0, 0])
     ax1.scatter([x for x, y in rr], [y for x, y in rr], color='blue', s=100, marker='o', label='Measurements')
-    ax1.scatter([x for x, y in rrl], [y for x, y in rrl], color='blue', s=150, marker='^', label='βγ Lower Limits')
-    ax1.set_xlabel("BH spin (reflection)", fontsize=14)
-    ax1.set_ylabel("βγ", fontsize=14)
+    ax1.scatter([x for x, y in rrl], [y for x, y in rrl], color='blue', s=150, marker='^', label='βΓ Lower Limits')
+    ax1.set_xlabel("BH spin (reflection)", fontsize=16)
+    ax1.set_ylabel("βΓ", fontsize=16)
     ax1.set_xlim(0, 1)
     ax1.grid(True, linestyle='dotted', alpha=0.6)
     ax1.legend()
@@ -665,9 +657,9 @@ def create_spin_speed_plots(rr, rrl, cc, ccl, qq, qql):
     # Continuum plot - NO REGRESSION LINES
     ax2 = fig_combined.add_subplot(gs[1, 0])
     ax2.scatter([x for x, y in cc], [y for x, y in cc], color='blue', s=100, marker='o', label='Measurements')
-    ax2.scatter([x for x, y in ccl], [y for x, y in ccl], color='blue', s=150, marker='^', label='βγ Lower Limits')
-    ax2.set_xlabel("BH spin (continuum)", fontsize=14)
-    ax2.set_ylabel("βγ", fontsize=14)
+    ax2.scatter([x for x, y in ccl], [y for x, y in ccl], color='blue', s=150, marker='^', label='βΓ Lower Limits')
+    ax2.set_xlabel("BH spin (continuum)", fontsize=16)
+    ax2.set_ylabel("βΓ", fontsize=16)
     ax2.set_xlim(0, 1)
     ax2.grid(True, linestyle='dotted', alpha=0.6)
     ax2.legend()
@@ -675,9 +667,9 @@ def create_spin_speed_plots(rr, rrl, cc, ccl, qq, qql):
     # QPO plot - NO REGRESSION LINES
     ax3 = fig_combined.add_subplot(gs[2, 0])
     ax3.scatter([x for x, y in qq], [y for x, y in qq], color='blue', s=100, marker='o', label='Measurements')
-    ax3.scatter([x for x, y in qql], [y for x, y in qql], color='blue', s=150, marker='^', label='βγ Lower Limits')
-    ax3.set_xlabel("BH spin (QPO)", fontsize=14)
-    ax3.set_ylabel("βγ", fontsize=14)
+    ax3.scatter([x for x, y in qql], [y for x, y in qql], color='blue', s=150, marker='^', label='βΓ Lower Limits')
+    ax3.set_xlabel("BH spin (QPO)", fontsize=16)
+    ax3.set_ylabel("βΓ", fontsize=16)
     ax3.set_xlim(0, 1)
     ax3.grid(True, linestyle='dotted', alpha=0.6)
     ax3.legend()
@@ -685,6 +677,6 @@ def create_spin_speed_plots(rr, rrl, cc, ccl, qq, qql):
     plt.tight_layout()
     plt.savefig('figures/spintests.pdf')
     plt.savefig('figures/spintests.png', dpi=300)
-    plt.savefig('figures/SCIENCEFIG3.pdf')
-    plt.savefig('figures/SCIENCEFIG3.png', dpi=300)
+    plt.savefig('figures/FIG2.pdf')
+    plt.savefig('figures/FIG2.png', dpi=300)
     

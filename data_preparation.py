@@ -12,9 +12,11 @@ import pandas as pd
 from tabulate import tabulate
 from utils import clip, breal, lorentz
 
-def prepare_data(data_file='jet_data_basic.csv'):
-#def prepare_data(data_file='jet_data_basic_no1543.csv'):
-#def prepare_data(data_file='jet_data_fakespincorr.csv'):
+
+def prepare_data(data_file='jet_data_basic.csv'): #this is the real data set
+#def prepare_data(data_file='jet_data_basic_simple_fake.csv'): #a simple fake data set which should show the pop differences
+#def prepare_data(data_file='jet_data_basic_no1543.csv'): # the data with 1543 (fastest source) removed
+#def prepare_data(data_file='jet_data_fakespincorr.csv'): # a file with a speed-spin correlation inserted
     """
     Load and prepare data for jet analysis from a CSV file
     

@@ -16,7 +16,7 @@ import analysis
 # ====================================================
 
 # What to analyze
-RUN_POPULATION_ANALYSIS = True     # Run population distribution analysis
+RUN_POPULATION_ANALYSIS = False   # Run population distribution analysis
 RUN_SPIN_ANALYSIS = False          # Run black hole spin correlation analysis
 
 # Statistical test method for population analysis
@@ -37,11 +37,11 @@ ANGLE_UNCERTAINTY_STEP = 5.0       # Step size for angle uncertainty
 
 # Distance uncertainty (as a fraction)
 DISTANCE_UNCERTAINTY_MIN = 0.0     # Minimum distance uncertainty to test
-DISTANCE_UNCERTAINTY_MAX = 0.3    # Maximum distance uncertainty to test
+DISTANCE_UNCERTAINTY_MAX = 0.5   # Maximum distance uncertainty to test
 DISTANCE_UNCERTAINTY_STEP = 0.05    # Step size for distance uncertainty
 
 # Simulation parameters
-ITERATIONS = 50000                    # Monte Carlo iterations per parameter set
+ITERATIONS = 1000                    # Monte Carlo iterations per parameter set
 SPIN_METHOD = "qpo"         # Spin measurement method for threshold ("reflection", "continuum", "qpo")
 
 def main():
@@ -56,14 +56,50 @@ def main():
    print("Starting data preparation...")
    all_jets_list, categories = dp.prepare_data()
    
-   # DIRECTLY GENERATE SPIN-SPEED PLOTS AND OTHER KEY FIGURES
+   # ALWAYS GENERATE KEY PLOTS
    print("\n ********************** GENERATING KEY PLOTS ********************** ")
-   # Call the visualization module to create just the main figures, particularly SCIENCEFIG3
+   
+   # Always generate spin-speed plots
    vis.create_spin_speed_plots(
        categories['rr'], categories['rrl'],
        categories['cc'], categories['ccl'],
        categories['qq'], categories['qql']
    )
+   
+   # Always generate the physics plots using existing function
+   print("Generating physics plots...")
+   
+   # Extract data using existing structure from create_all_plots
+   alljets = categories['alljets']
+   bh = categories['bh']
+   nsnourf = categories['nsnourf']
+   prec = categories['prec']
+   fixednourf = categories['fixednourf']
+   
+   extracted_data = {
+       'bh_betagammas': [jet[7] for jet in bh],
+       'ns_betagammas': [jet[7] for jet in nsnourf],
+       'unknown_betagammas': [jet[7] for jet in categories['unknourf']],
+       'prec_betagammas': [jet[7] for jet in prec],
+       'nonprec_betagammas': [jet[7] for jet in categories['nonprecnourf']],
+       'fixed_betagammas': [jet[7] for jet in fixednourf],
+       'single_betagammas': [jet[7] for jet in categories['singlenourf']]
+   }
+   
+   # Define colors (from existing code)
+   light_gray = '#CCCCCC'
+   gray = '#999999'
+   blue = '#6495ED'
+   green = '#90EE90'
+   red = '#FF6347'
+   
+   # Call existing physics plots function
+   vis.create_physics_plots(
+       extracted_data, 
+       categories['triangle_points'],
+       light_gray, gray, blue, green, red
+   )
+   
    print(" ********************** KEY PLOTS GENERATED ********************** ")
    
    # Determine analysis mode based on parameters
@@ -144,10 +180,10 @@ def main():
    else:
        spin_results = None
    
-   # Generate visualizations for population and spin analysis
+   # Generate additional visualizations for population and spin analysis if needed
    # Only do this for non-threshold analysis as threshold creates its own plots
    if (RUN_POPULATION_ANALYSIS or RUN_SPIN_ANALYSIS) and not is_threshold_analysis:
-       print("\n ********************** PLOTTING BEGINNING ********************** ")
+       print("\n ********************** ADDITIONAL PLOTTING BEGINNING ********************** ")
        
        # Extract the relevant results depending on the mode
        if uncertainty_mode == "none":
@@ -158,7 +194,7 @@ def main():
            spin_data = spin_results.get("spin_uncertainty") if spin_results else None
        
        vis.create_all_plots(all_jets_list, categories, pop_data, spin_data)
-       print(" ********************** PLOTTING COMPLETE ********************** ")
+       print(" ********************** ADDITIONAL PLOTTING COMPLETE ********************** ")
        
 
 if __name__ == "__main__":
