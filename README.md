@@ -10,4 +10,5 @@ There are a variety of switches for performing more or less extensive statistica
 The PDF of the paper 
 
 "The connection between the fastest astrophysical jets and the spin axis of their black hole", 
-Fender & Motta (Nature Astronomy, 2025) which is 100% open access, is also downloadable here
+Fender & Motta (Nature Astronomy, 2025) which is 100% open access, is also downloadable: 
+click on FenderMotta2025.pdf in the file list.
